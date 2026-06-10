@@ -14,7 +14,7 @@ db/
 ```
 
 The `chunks` table itself is **not** defined here — it's created/replaced by the
-indexing pipeline (`indexing/build_index.py`). `init.sql` only enables the
+indexing pipeline (`indexing-rag-context-pipeline/build_index.py`). `init.sql` only enables the
 `vector` extension on the empty data volume the first time the container starts.
 
 ## Run
@@ -27,16 +27,12 @@ docker compose down -v      # stop and wipe the database
 
 The service listens on `localhost:5432` with user/password/db all `rag` — i.e.
 `DATABASE_URL=postgresql://rag:rag@localhost:5432/rag`, which the indexing,
-querying, and backend sides read from their `.env`.
-
-> **Note:** because this compose file now lives in its own directory, its Compose
-> project name (and therefore the `pgdata` volume) differs from the old umbrella
-> one. The previous data volume isn't reused — start this, then rebuild the index
-> with `python indexing/build_index.py` (the `chunks` table is regeneratable).
+engine, and backend sides read from their `.env`.
 
 ## Required by
 
 The Postgres container is a prerequisite for building the index
-(`indexing/build_index.py`), the REPL (`querying/ask.py`), the eval harness
-(`eval/run_eval.py`), and the [backend API](../backend-rag-context-pipeline/) —
-all of which connect via `DATABASE_URL`. Bring this up first.
+(`indexing-rag-context-pipeline/build_index.py`), the REPL + eval
+(`engine-rag-context-pipeline/ask.py`, `engine-rag-context-pipeline/eval/run_eval.py`),
+and the [backend API](../backend-rag-context-pipeline/) —
+all of which connect via `DATABASE_URL`.
