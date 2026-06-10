@@ -1,0 +1,3 @@
+# Linguist classifies SQL as "data" and excludes it from the language stats by
+# default, leaving this repo with no language. Count db/init.sql as SQL.
+*.sql linguist-detectable
