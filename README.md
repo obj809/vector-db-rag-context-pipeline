@@ -1,4 +1,4 @@
-# vector-db-rag-context-pipeline
+# Vector DB RAG Context Pipeline
 
 The vector store for the [RAG Context Pipeline](../): Postgres + the `pgvector`
 extension, run locally via Docker. One of the per-concern repos the pipeline is
