@@ -2,7 +2,7 @@
 
 The vector store for the [RAG Context Pipeline](../): Postgres + the `pgvector`
 extension, run locally via Docker. One of the per-concern repos the pipeline is
-being split into (`backend-`, `engine-`, `indexing-`, `vector-db-rag-context-pipeline`).
+split into (`backend-`, `engine-`, `indexing-`, `vector-db-rag-context-pipeline`).
 This repo owns the **database service only**.
 
 ## Contents
