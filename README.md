@@ -9,6 +9,7 @@ This repo owns the **database service only**.
 
 ```
 docker-compose.yml    # pgvector/pgvector:pg17 service (publishes localhost:5432)
+schema.md             # the chunks table schema (created by the indexing pipeline)
 db/
 └── init.sql          # CREATE EXTENSION vector (runs once on first container start)
 ```
@@ -16,6 +17,26 @@ db/
 The `chunks` table itself is **not** defined here — it's created/replaced by the
 indexing pipeline (`indexing-rag-context-pipeline/build_index.py`). `init.sql` only enables the
 `vector` extension on the empty data volume the first time the container starts.
+
+## Schema
+
+The vector store is a single table, `chunks`, dropped and recreated on every build:
+
+```sql
+CREATE TABLE chunks (
+    id              SERIAL PRIMARY KEY,
+    content         TEXT NOT NULL,
+    embedding       VECTOR(dim) NOT NULL,   -- dim derived from the embedding model (384 for bge-small)
+    embedding_model TEXT NOT NULL,
+    page            INTEGER,
+    volume          TEXT
+);
+```
+
+`(volume, page)` together form a citation (pages restart per volume), and
+`embedding_model` is stored alongside the data so the query side can't embed with a
+different model than the index. See [`schema.md`](schema.md) for the per-column
+breakdown and the cross-repo contract the table forms.
 
 ## Run
 
