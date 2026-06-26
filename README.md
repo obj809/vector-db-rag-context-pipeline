@@ -50,6 +50,20 @@ The service listens on `localhost:5432` with user/password/db all `rag` — i.e.
 `DATABASE_URL=postgresql://rag:rag@localhost:5432/rag`, which the indexing,
 engine, and backend sides read from their `.env`.
 
+### Networks
+
+The `db` service stays on its own Compose project network
+(`vector-db-rag-context-pipeline_default`, which the engine and backend join as an
+`external` network to reach it as `db:5432`) and **also** joins the shared
+external `webnet` bridge, so it sits on one host-wide network alongside the
+project's other containers (LiteLLM, Ollama, the API gateway). `webnet` must
+already exist before `docker compose up -d`:
+
+```bash
+docker network create webnet   # one-time, if it doesn't exist yet
+docker network ls | grep webnet
+```
+
 ## Required by
 
 The Postgres container is a prerequisite for building the index

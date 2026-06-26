@@ -15,6 +15,14 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - default
+      - webnet
 
 volumes:
   pgdata:
+
+networks:
+  webnet:
+    external: true
+    name: webnet
