@@ -2,9 +2,6 @@
 # Standalone — run this INSTEAD of docker-compose.yml (not layered with -f):
 #   docker compose -f docker-compose-prod.yml up -d
 #
-# Run it from this repo's directory so the Compose project name stays
-# `vector-db-rag-context-pipeline` and its default network keeps the name
-# `vector-db-rag-context-pipeline_default` that the backend/indexer join.
 #
 # Differences from dev (docker-compose.yml):
 #   - NO host port publish — Postgres is reachable only over the internal
@@ -18,7 +15,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_USER: rag
-      POSTGRES_PASSWORD: rag        # internal-only; the DB is never published to the host
+      POSTGRES_PASSWORD: rag
       POSTGRES_DB: rag
     volumes:
       - pgdata:/var/lib/postgresql/data

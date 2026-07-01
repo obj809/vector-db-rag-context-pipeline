@@ -26,7 +26,7 @@ The vector store is a single table, `chunks`, dropped and recreated on every bui
 CREATE TABLE chunks (
     id              SERIAL PRIMARY KEY,
     content         TEXT NOT NULL,
-    embedding       VECTOR(dim) NOT NULL,   -- dim derived from the embedding model (384 for bge-small)
+    embedding       VECTOR(dim) NOT NULL,
     embedding_model TEXT NOT NULL,
     page            INTEGER,
     volume          TEXT
@@ -60,7 +60,7 @@ project's other containers (LiteLLM, Ollama, the API gateway). `webnet` must
 already exist before `docker compose up -d`:
 
 ```bash
-docker network create webnet   # one-time, if it doesn't exist yet
+docker network create webnet
 docker network ls | grep webnet
 ```
 

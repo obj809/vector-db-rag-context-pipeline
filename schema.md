@@ -16,7 +16,7 @@ writes it; the engine and backend read it).
 CREATE TABLE chunks (
     id              SERIAL PRIMARY KEY,
     content         TEXT NOT NULL,
-    embedding       VECTOR(dim) NOT NULL,   -- dim derived from the embedding model (384 for bge-small)
+    embedding       VECTOR(dim) NOT NULL,
     embedding_model TEXT NOT NULL,
     page            INTEGER,
     volume          TEXT
